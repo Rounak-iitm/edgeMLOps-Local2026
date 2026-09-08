@@ -1,0 +1,33 @@
+services:
+  edge-inference:
+    build:
+      context: ..
+    image: edgemlops-local/inference:2.0.0
+    container_name: edgemlops-inference
+    restart: unless-stopped
+    ports:
+      - "${EDGE_BIND:-127.0.0.1}:${EDGE_PORT:-8080}:8080"
+    volumes:
+      - ../model_store:/model_store:ro
+      - ../product:/app/product:ro
+      - ../license:/license:ro
+      - ../logs:/audit
+    environment:
+      MODEL_STORE_DIR: /model_store
+      EDGE_API_KEY: ${EDGE_API_KEY:-}
+      EDGE_LICENSE_MODE: ${EDGE_LICENSE_MODE:-production}
+      EDGE_LICENSE_FILE: /license/license.json
+      EDGE_AUDIT_LOG: /audit/audit.log
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD","python","-c","import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=2).read()"]
+      interval: 15s
+      timeout: 3s
+      retries: 5

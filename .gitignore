@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.zen/
+model_store/*.onnx
+model_store/latest_metadata.json
+model_store/LATEST
+!model_store/.gitkeep
+*.egg-info/
+.pytest_cache/
+docker/.env
+license/license.json
+logs/*.log

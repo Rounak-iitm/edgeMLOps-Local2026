@@ -1,0 +1,11 @@
+{
+  "license_id": "string",
+  "customer": "string",
+  "site": "string",
+  "edition": "Enterprise Edge",
+  "valid_from": "YYYY-MM-DD",
+  "valid_until": "YYYY-MM-DD",
+  "machine_limit": 1,
+  "features": ["anomaly_detection", "predictive_maintenance"],
+  "signature": "base64"
+}

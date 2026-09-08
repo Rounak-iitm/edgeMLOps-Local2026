@@ -1,0 +1,23 @@
+product:
+  name: EdgeMLOps Local
+  edition: Enterprise Edge
+  version: 2.0.0
+  vendor: "YOUR COMPANY NAME"
+  support_contact: "support@example.com"
+  license_required: true
+  data_residency: on_premise
+  runtime_mode: offline_capable
+
+security:
+  api_key_required: true
+  bind_address: "127.0.0.1"
+  tls_termination: external
+  audit_log: ./logs/audit.log
+
+operations:
+  health_url: http://127.0.0.1:8080/health
+  port: 8080
+  model_retention: 10
+  backup_paths:
+    - model_store
+    - config

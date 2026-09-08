@@ -1,0 +1,58 @@
+company:
+  name: "Demo Manufacturing Co"
+  site: "Plant-01"
+  machine_id: "CNC-MILL-07"
+
+sensors:
+  - name: vibration_mm_s
+    unit: "mm/s"
+    normal_mean: 2.0
+    normal_std: 0.3
+  - name: bearing_temp_c
+    unit: "C"
+    normal_mean: 55.0
+    normal_std: 3.0
+  - name: spindle_load_pct
+    unit: "%"
+    normal_mean: 40.0
+    normal_std: 5.0
+  - name: hydraulic_pressure_bar
+    unit: "bar"
+    normal_mean: 120.0
+    normal_std: 6.0
+
+simulation:
+  reference_batch_size: 500
+  live_batch_size: 300
+  sample_interval_seconds: 5
+
+drift_detection:
+  method: "ks"
+  ks_p_value_threshold: 0.05
+  psi_threshold: 0.2
+  min_drifted_sensors_to_trigger: 1
+
+model:
+  task: "anomaly_detection"
+  target_sensor: "bearing_temp_c"
+  isolation_forest:
+    n_estimators: 150
+    contamination: 0.05
+    random_state: 42
+  random_forest:
+    n_estimators: 200
+    max_depth: 8
+    random_state: 42
+
+retrain:
+  trigger: "on_drift"
+  min_samples_required: 50
+
+deployment:
+  model_store_dir: "./model_store"
+  onnx_filename_prefix: "edge_model"
+  retain_versions: 10
+  inference_service:
+    host: "0.0.0.0"
+    port: 8080
+    reload_endpoint: "/reload"

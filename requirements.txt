@@ -1,0 +1,18 @@
+# Training / orchestration side — runs the ZenML pipeline that simulates
+# data, detects drift, retrains, and exports ONNX. This environment never
+# needs to run on the factory floor 24/7 (services/inference/ handles that
+# with its own much smaller requirements.txt), so heavier dependencies here
+# are fine.
+
+zenml==0.67.0
+pydantic>=2.8,<2.9
+scikit-learn==1.5.2
+skl2onnx==1.17.0
+onnx==1.17.0
+onnxruntime==1.19.2
+pandas==2.2.3
+numpy==1.26.4
+scipy==1.14.1
+pyyaml==6.0.2
+
+cryptography==43.0.3
